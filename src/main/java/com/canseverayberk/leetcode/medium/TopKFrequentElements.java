@@ -1,4 +1,4 @@
-package com.canseveayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium;
 
 import java.util.ArrayList;
 import java.util.Collections;

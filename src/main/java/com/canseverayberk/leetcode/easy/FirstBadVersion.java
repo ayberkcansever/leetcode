@@ -1,4 +1,4 @@
-package com.canseveayberk.leetcode.easy;
+package com.canseverayberk.leetcode.easy;
 
 public class FirstBadVersion {
 
