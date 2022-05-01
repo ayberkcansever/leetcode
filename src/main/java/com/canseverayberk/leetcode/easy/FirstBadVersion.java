@@ -1,5 +1,8 @@
 package com.canseverayberk.leetcode.easy;
 
+/**
+ * https://leetcode.com/problems/first-bad-version/
+ */
 public class FirstBadVersion {
 
     public static void main(String[] args) {
@@ -9,7 +12,7 @@ public class FirstBadVersion {
     public static int firstBadVersion(int n) {
         int temp = 0;
         int middle = n / 2;
-        while(temp != middle) {
+        while (temp != middle) {
             if (isBadVersion(middle)) {
                 middle = temp + (middle - temp) / 2;
             } else {

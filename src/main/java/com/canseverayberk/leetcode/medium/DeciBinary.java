@@ -1,5 +1,8 @@
 package com.canseverayberk.leetcode.medium;
 
+/**
+ * https://leetcode.com/problems/partitioning-into-minimum-number-of-deci-binary-numbers/
+ */
 public class DeciBinary {
 
     public static void main(String[] args) {
