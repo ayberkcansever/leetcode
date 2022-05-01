@@ -1,5 +1,8 @@
 package com.canseverayberk.leetcode.medium;
 
+/**
+ * https://leetcode.com/problems/deepest-leaves-sum/
+ */
 public class DeepestLeavesSum {
 
     public static void main(String[] args) {
