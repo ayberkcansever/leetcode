@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * https://leetcode.com/problems/minimum-window-substring/submissions/
+ * https://leetcode.com/problems/minimum-window-substring
  */
 public class MinimumWindowSubstring {
 

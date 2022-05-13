@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/
+ * https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
  */
 public class ConstructBinaryTreeFromPreOrderAndInOrder {
 

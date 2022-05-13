@@ -1,5 +1,8 @@
 package com.canseverayberk.leetcode.medium;
 
+/**
+ * https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/
+ */
 public class MaximumTwinSumOfALinkedList {
 
     public static void main(String[] args) {
