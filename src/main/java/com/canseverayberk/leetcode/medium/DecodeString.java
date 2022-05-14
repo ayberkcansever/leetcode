@@ -6,7 +6,7 @@ package com.canseverayberk.leetcode.medium;
 public class DecodeString {
 
     public static void main(String[] args) {
-        String s = "3[a]2[bc]";git add .
+        String s = "3[a]2[bc]";
         String decodedString = decodeString(s);
     }
 
