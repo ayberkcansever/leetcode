@@ -41,13 +41,3 @@ public class Permutations {
     }
 
 }
-
-
-/*
-123
-132
-21
-23
-31
-32
- */
