@@ -17,17 +17,17 @@ public class Permutations {
 
     public static List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
-        heapPermutation(result, nums, nums.length, nums.length);
+        heapPermutation(result, nums, nums.length);
         return result;
     }
 
-    private static void heapPermutation(List<List<Integer>> result, int[] nums, int size, int length) {
+    private static void heapPermutation(List<List<Integer>> result, int[] nums, int size) {
         if (size == 1) {
             result.add(Arrays.stream(nums).boxed().collect(Collectors.toList()));
         }
 
         for (int i = 0; i < size; i++) {
-            heapPermutation(result, nums, size - 1, length);
+            heapPermutation(result, nums, size - 1);
             int temp;
             if (size % 2 == 1) {
                 temp = nums[0];
