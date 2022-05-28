@@ -1,56 +1,58 @@
 package com.canseverayberk.leetcode.hard;
 
-import java.util.List;
-
 /**
  * https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
  */
 public class BestTimeToBuyAndSellStockIII {
 
     public static void main(String[] args) {
-        int[] prices = new int[]{3, 3, 5, 0, 0, 3, 1, 4};
+        int[] prices = new int[]{3,3,5,0,0,3,1,4};
         int maxProfit = maxProfit(prices);
     }
 
     public static int maxProfit(int[] prices) {
         int maxProfit = 0;
-        for (int i = 0; i < prices.length; i++) {
-            List<Integer> profits = maxProfitOfArrays(prices, i);
-            int i1 = profits.get(0);
-            int i2 = profits.get(1);
-            if (i1 + i2 > maxProfit) {
-                maxProfit = i1 + i2;
-            }
+        int[] profitsForward = profitsForward(prices);
+        int[] profitsBackward = profitsBackward(prices);
+
+        for(int i = 0; i < prices.length; i++){
+            maxProfit = Math.max(maxProfit, profitsForward[i] + profitsBackward[i]);
         }
 
         return maxProfit;
     }
 
-    private static List<Integer> maxProfitOfArrays(int[] prices, int index) {
-        if (prices.length == 0)
-            return List.of(0, 0);
-        int minBeforeFirst = prices[0];
-        int minBeforeSecond = Integer.MAX_VALUE;
-        int maxProfitFirst = 0;
-        int maxProfitSecond = 0;
-        for (int i = 0; i < prices.length; i++) {
-            int dayValue = prices[i];
-            if (i <= index) {
-                int profit = dayValue - minBeforeFirst;
-                if (profit > maxProfitFirst)
-                    maxProfitFirst = profit;
-                if (dayValue < minBeforeFirst)
-                    minBeforeFirst = dayValue;
-            } else {
-                int profit = dayValue - minBeforeSecond;
-                if (profit > maxProfitSecond)
-                    maxProfitSecond = profit;
-                if (dayValue < minBeforeSecond) {
-                    minBeforeSecond = dayValue;
-                }
-            }
+    private static int[] profitsBackward(int[] prices) {
+        int maxPrice = prices[prices.length - 1];
+        int maxProfit = 0;
+        int[] profits = new int[prices.length];
+        for(int i = prices.length - 2; i > -1; i--){
+            if(prices[i] > maxPrice)
+                maxPrice = prices[i];
+
+            int profit = maxPrice - prices[i];
+            if (profit > maxProfit)
+                maxProfit = profit;
+            profits[i] = maxProfit;
         }
-        return List.of(maxProfitFirst, maxProfitSecond);
+        return profits;
+    }
+
+    private static int[] profitsForward(int[] prices) {
+        int[] profits = new int[prices.length];
+        profits[0] = 0;
+        int minPrice = prices[0];
+        int maxProfit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] < minPrice)
+                minPrice = prices[i];
+            int profit = prices[i] - minPrice;
+            if (profit > maxProfit)
+                maxProfit = profit;
+            profits[i] = maxProfit;
+        }
+
+        return profits;
     }
 
 }
