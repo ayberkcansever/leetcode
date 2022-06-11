@@ -42,7 +42,6 @@ public class CopyListWithRandomPointer {
             index++;
         }
 
-        Node prevNewNode = null;
         tempHead = head;
         index = 0;
         while (tempHead != null) {
@@ -52,10 +51,6 @@ public class CopyListWithRandomPointer {
             tail.next = newNode;
             tail = tail.next;
 
-            if (prevNewNode != null) {
-                prevNewNode.next = newNode;
-            }
-            prevNewNode = newNode;
             tempHead = tempHead.next;
             index++;
         }
@@ -71,7 +66,6 @@ public class CopyListWithRandomPointer {
             index++;
         }
         return copiedList;
-
     }
 
     static class Node {
