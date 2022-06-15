@@ -8,7 +8,7 @@ public class MinimumSizeSubArraySum {
     public static void main(String[] args) {
         int target = 7;
         int[] nums = new int[]{2, 3, 1, 2, 4, 3};
-        int minSubArrayLen = minSubArrayLen(7, nums);
+        int minSubArrayLen = minSubArrayLen(target, nums);
     }
 
     public static int minSubArrayLen(int target, int[] nums) {
