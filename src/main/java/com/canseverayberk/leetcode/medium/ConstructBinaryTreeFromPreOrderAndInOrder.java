@@ -1,7 +1,6 @@
 package com.canseverayberk.leetcode.medium;
 
-import java.util.Arrays;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -17,73 +16,64 @@ public class ConstructBinaryTreeFromPreOrderAndInOrder {
     }
 
     public static TreeNode buildTree(int[] preorder, int[] inorder) {
-        int myValue = preorder[0];
-        TreeNode me = new TreeNode(myValue);
-        int rootIndex = findRootIndex(inorder, myValue);
+        if (preorder.length == 0)
+            return null;
+        if (inorder.length == 0)
+            return null;
 
-        int[] left = findLeft(inorder, rootIndex);
-        int[] right = findRight(inorder, rootIndex);
 
-        if (left.length == 0 && right.length == 0) {
-            return me;
+        int rootVal = preorder[0];
+        TreeNode root = new TreeNode(rootVal);
+
+        if (preorder.length == 1 && inorder.length == 1)
+            return root;
+
+        int[] left = getLeftSide(rootVal, inorder);
+        int[] right = getRightSide(rootVal, inorder);
+
+        root.right = buildTree(removeFrom(preorder, left, rootVal), right);
+        root.left = buildTree(removeFrom(preorder, right, rootVal), left);
+
+        return root;
+    }
+
+    public static int[] getLeftSide(int rootVal, int[] inorder) {
+        List<Integer> list = new ArrayList<>();
+        for(int i : inorder) {
+            if (i == rootVal)
+                break;
+            list.add(i);
+        }
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    public static int[] getRightSide(int rootVal, int[] inorder) {
+        List<Integer> list = new ArrayList<>();
+        boolean foundRoot = false;
+        for(int i : inorder) {
+            if (i == rootVal)
+                foundRoot = true;
+            if (foundRoot)
+                list.add(i);
+        }
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    public static int[] removeFrom(int[] arr, int[] remove, int root) {
+        Set<Integer> set = new HashSet<>();
+        set.add(root);
+        for(int i : remove) {
+            set.add(i);
         }
 
-        int[] newPreOrder = buildNewOrder(preorder, left);
-        int[] newInOrder = buildNewOrder(inorder, left);
-
-        if (newPreOrder.length > 0 && newInOrder.length > 0)
-            me.left = buildTree(newPreOrder, newInOrder);
-
-        newPreOrder = buildNewOrder(preorder, right);
-        newInOrder = buildNewOrder(inorder, right);
-
-        if (newPreOrder.length > 0 && newInOrder.length > 0)
-            me.right = buildTree(newPreOrder, newInOrder);
-
-        return me;
-    }
-
-    private static int[] buildNewOrder(int[] order, int[] newInOrder) {
-        if(newInOrder.length == 0)
-            return newInOrder;
-
-        int[] newArray = new int[newInOrder.length];
-        int j = 0;
-
-        Set<Integer> inOrderSet = Arrays.stream(newInOrder).boxed().collect(Collectors.toSet());
-
-        for (int k : order) {
-            if (inOrderSet.contains(k)) {
-                newArray[j++] = k;
-            }
-            if (j == newInOrder.length)
-                break;
-        }
-        return newArray;
-    }
-
-    private static int[] findLeft(int[] array, int rootIndex) {
-        int[] newArray = new int[rootIndex];
-        System.arraycopy(array, 0, newArray, 0, rootIndex);
-        return newArray;
-    }
-
-    private static int[] findRight(int[] array, int rootIndex) {
-        int[] newArray = new int[array.length - rootIndex - 1];
-        if (rootIndex >= 0)
-            System.arraycopy(array, rootIndex + 1, newArray, 0, array.length - rootIndex - 1);
-        return newArray;
-    }
-
-    private static int findRootIndex(int[] array, int rootValue) {
-        int rootIndex = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == rootValue) {
-                rootIndex = i;
-                break;
+        List<Integer> list = new ArrayList<>();
+        for(int i : arr) {
+            if (!set.contains(i)) {
+                list.add(i);
             }
         }
-        return rootIndex;
+
+        return list.stream().mapToInt(Integer::intValue).toArray();
     }
 
     static class TreeNode {
