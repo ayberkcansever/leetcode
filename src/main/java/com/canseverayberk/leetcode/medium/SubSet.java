@@ -14,25 +14,21 @@ public class SubSet {
     }
 
     public static List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> subsets = new ArrayList<>();
-        List<List<Integer>> prevSubsets = new ArrayList<>();
-
-        for (int num : nums) {
-            List<Integer> ss = new ArrayList<>();
-            ss.add(num);
-            subsets.add(ss);
-
-            for (List<Integer> prevSubset : prevSubsets) {
-                List<Integer> newSs = new ArrayList<>(prevSubset);
-                newSs.add(num);
-                subsets.add(newSs);
-            }
-
-            prevSubsets = new ArrayList<>(subsets);
-        }
-
-        subsets.add(List.of());
-        return subsets;
+        List<List<Integer>> result = new ArrayList<>();
+        dfs(nums, 0, new ArrayList<>(), result);
+        return result;
     }
 
+    public static void dfs(int[] nums, int i, List<Integer> subset, List<List<Integer>> result) {
+        if (i >= nums.length) {
+            result.add(new ArrayList(subset));
+            return;
+        }
+
+        subset.add(nums[i]);
+        dfs(nums, i + 1, subset, result);
+
+        subset.remove(subset.size() - 1);
+        dfs(nums, i + 1, subset, result);
+    }
 }
