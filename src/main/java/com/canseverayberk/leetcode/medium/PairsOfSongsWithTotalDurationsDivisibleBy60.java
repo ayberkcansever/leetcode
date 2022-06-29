@@ -15,15 +15,13 @@ public class PairsOfSongsWithTotalDurationsDivisibleBy60 {
         Map<Integer, Integer> map = new HashMap<>();
 
         int count = 0;
-        for (int i = 0; i < time.length; i++) {
+        for (int j : time) {
 
-            int needsMe = time[i] % 60;
-            int iNeed = (60 - (time[i] % 60)) % 60;
+            int needsMe = j % 60;
+            int iNeed = (60 - (j % 60)) % 60;
 
             Integer needsCount = map.get(needsMe);
             count += (needsCount == null ? 0 : needsCount);
-
-            System.out.println(count);
 
             Integer iNeedCount = map.get(iNeed);
             if (iNeedCount == null) {
