@@ -1,6 +1,9 @@
 package com.canseverayberk.leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class FindShortestPathViaBfs {
 
@@ -19,11 +22,10 @@ public class FindShortestPathViaBfs {
         node2.neighbors.add(node0);
         node2.neighbors.add(node1);
 
-        List<List<Node>> pathList = new ArrayList<>();
-        bfs(node2, node3, pathList);
+        List<Node> pathList = bfs(node2, node3);
     }
 
-    public static void bfs(Node source, Node target, List<List<Node>> pathList) {
+    public static List<Node> bfs(Node source, Node target) {
         Queue<List<Node>> queue = new LinkedList<>();
 
         List<Node> pathToNode = new ArrayList<>();
@@ -36,8 +38,7 @@ public class FindShortestPathViaBfs {
             Node lastNode = pathToNode.get(pathToNode.size() - 1);
 
             if (lastNode.val == target.val) {
-                pathList.add(new ArrayList<>(pathToNode));
-                return;
+                return pathToNode;
             }
 
             for (Node nextNode : lastNode.neighbors) {
@@ -49,6 +50,8 @@ public class FindShortestPathViaBfs {
                 }
             }
         }
+
+        return List.of();
     }
 
     static class Node {
