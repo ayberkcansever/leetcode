@@ -36,14 +36,10 @@ public class FindPathsFromSourceToTargetViaBfs {
             path = queue.poll();
             Node last = path.get(path.size() - 1);
 
-            // If last vertex is the desired destination
-            // then print the path
             if (last.val == target.val) {
                 paths.add(new ArrayList<>(path));
             }
 
-            // Traverse to all the nodes connected to
-            // current vertex and push new path to queue
             for (Node neighbor : last.neighbors) {
                 if (isNotVisited(neighbor, path)) {
                     List<Node> newPath = new ArrayList<>(path);
