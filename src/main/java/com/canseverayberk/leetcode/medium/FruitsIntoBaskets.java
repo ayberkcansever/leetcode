@@ -1,6 +1,8 @@
 package com.canseverayberk.leetcode.medium;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /*
@@ -14,38 +16,32 @@ public class FruitsIntoBaskets {
     }
 
     public static int totalFruit(int[] fruits) {
-        if (fruits.length == 0) {
-            return 0;
-        }
+        int max = 0, tail = 0;
+        Map<Integer, Integer> map = new HashMap<>();
 
-        int maxTotalFruitCount = 0;
+        for (int fruit : fruits) {
+            int currentCount = map.getOrDefault(fruit, 0);
+            currentCount++;
+            map.put(fruit, currentCount);
 
-        for (int i = 0; i < fruits.length; i++) {
-
-            if (maxTotalFruitCount >= fruits.length - i)
-                return maxTotalFruitCount;
-
-            Set<Integer> fruitTreeSet = new HashSet<Integer>();
-            int totalFruitCount = 0;
-
-            for (int j = i; j < fruits.length; j++) {
-                fruitTreeSet.add(fruits[j]);
-
-                if (fruitTreeSet.size() <= 2) {
-                    totalFruitCount++;
-                    maxTotalFruitCount = Math.max(totalFruitCount, maxTotalFruitCount);
-                } else {
-                    maxTotalFruitCount = Math.max(totalFruitCount, maxTotalFruitCount);
-                    totalFruitCount = 0;
-                    fruitTreeSet = new HashSet<>();
-                    break;
+            if (map.values().size() <= 2) {
+                int sum = 0;
+                for (Integer value : map.values()) {
+                    sum += value;
                 }
-
+                max = Math.max(max, sum);
+            } else {
+                int c = map.get(fruits[tail]);
+                if (c == 1) {
+                    map.remove(fruits[tail]);
+                } else {
+                    c--;
+                    map.put(fruits[tail], c);
+                }
+                tail++;
             }
-
         }
-
-        return maxTotalFruitCount;
+        return max;
 
     }
 }
