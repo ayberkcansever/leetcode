@@ -1,7 +1,7 @@
 package com.canseverayberk.leetcode.medium;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LongestSubstringWithoutRepeatingCharacters {
 
@@ -9,24 +9,24 @@ public class LongestSubstringWithoutRepeatingCharacters {
         int lengthOfLongestSubstring = lengthOfLongestSubstring("abcabcbb");
     }
 
-    public static int lengthOfLongestSubstring(String s) {
-        if (s ==null)
+    public static int lengthOfLongestSubstring(String str) {
+        if (str == null)
             return 0;
 
         int maxLength = 0;
+        Map<Character, Integer> indexMap = new HashMap<>();
 
-        for (int i = 0; i < s.length() - maxLength; i++) {
-            int count = 0;
-            Set<Character> existingCharSet = new HashSet<>();
-            for (int j = i; j < s.length(); j++) {
-                char currentChar = s.charAt(j);
-                if (existingCharSet.contains(currentChar)) {
-                    break;
-                }
-                existingCharSet.add(currentChar);
-                count++;
+        for (int head = 0; head < str.length(); head++) {
+            Character ch = str.charAt(head);
+            Integer lastExistingIndex = indexMap.get(ch);
+            if (lastExistingIndex == null) {
+                indexMap.put(ch, head);
+                maxLength = Math.max(maxLength, indexMap.keySet().size());
+            } else {
+                head = lastExistingIndex;
+                indexMap.clear();
             }
-            maxLength = Math.max(maxLength, count);
+
         }
 
         return maxLength;
