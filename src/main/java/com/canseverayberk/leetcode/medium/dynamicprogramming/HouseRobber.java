@@ -1,7 +1,7 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.dynamicprogramming;
 
 /*
-https://leetcode.com/problems/house-robber/
+https://leetcode.com/problems/house-robber
  */
 public class HouseRobber {
 

@@ -1,7 +1,7 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.dynamicprogramming;
 
 /*
-https://leetcode.com/problems/maximum-product-subarray/
+https://leetcode.com/problems/maximum-product-subarray
  */
 public class MaxProductSubArray {
 

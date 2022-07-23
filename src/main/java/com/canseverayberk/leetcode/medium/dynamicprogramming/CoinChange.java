@@ -1,7 +1,7 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.dynamicprogramming;
 
 /*
-https://leetcode.com/problems/coin-change/
+https://leetcode.com/problems/coin-change
  */
 public class CoinChange {
 

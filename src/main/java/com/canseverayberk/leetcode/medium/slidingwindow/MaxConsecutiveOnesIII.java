@@ -1,4 +1,4 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.slidingwindow;
 
 /*
 https://leetcode.com/problems/max-consecutive-ones-iii
