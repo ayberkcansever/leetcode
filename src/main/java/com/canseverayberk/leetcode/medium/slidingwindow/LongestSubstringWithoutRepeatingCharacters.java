@@ -1,8 +1,11 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.slidingwindow;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+https://leetcode.com/problems/longest-substring-without-repeating-characters
+ */
 public class LongestSubstringWithoutRepeatingCharacters {
 
     public static void main(String[] args) {
