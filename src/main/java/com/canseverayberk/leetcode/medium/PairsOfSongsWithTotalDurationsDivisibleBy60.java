@@ -3,6 +3,9 @@ package com.canseverayberk.leetcode.medium;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60
+ */
 public class PairsOfSongsWithTotalDurationsDivisibleBy60 {
 
     public static void main(String[] args) {

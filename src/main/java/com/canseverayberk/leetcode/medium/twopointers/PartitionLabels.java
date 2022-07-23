@@ -1,10 +1,12 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.twopointers;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+https://leetcode.com/problems/partition-labels
+ */
 public class PartitionLabels {
-
 
     public static void main(String[] args) {
         String s = "qiejxqfnqceocmy";

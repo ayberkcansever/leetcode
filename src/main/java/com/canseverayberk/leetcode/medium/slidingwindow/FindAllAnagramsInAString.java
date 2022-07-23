@@ -1,4 +1,4 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.slidingwindow;
 
 import java.util.ArrayList;
 import java.util.HashMap;

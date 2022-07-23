@@ -1,7 +1,10 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.binarysearch;
 
 import java.util.Arrays;
 
+/*
+https://leetcode.com/problems/search-in-rotated-sorted-array
+ */
 public class SearchInRotatedSortedArray {
 
     public static void main(String[] args) {

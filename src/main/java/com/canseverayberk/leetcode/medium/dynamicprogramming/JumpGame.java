@@ -1,4 +1,4 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.dynamicprogramming;
 
 /*
 https://leetcode.com/problems/jump-game
