@@ -1,4 +1,4 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.backtracking;
 
 import java.util.ArrayList;
 import java.util.Arrays;

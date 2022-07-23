@@ -3,8 +3,8 @@ package com.canseverayberk.leetcode.medium;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * https://leetcode.com/problems/subsets/
+/*
+https://leetcode.com/problems/subsets
  */
 public class SubSet {
 
@@ -21,7 +21,7 @@ public class SubSet {
 
     public static void dfs(int[] nums, int i, List<Integer> subset, List<List<Integer>> result) {
         if (i >= nums.length) {
-            result.add(new ArrayList(subset));
+            result.add(new ArrayList<>(subset));
             return;
         }
 
