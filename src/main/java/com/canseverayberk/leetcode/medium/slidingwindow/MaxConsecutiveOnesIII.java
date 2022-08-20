@@ -18,22 +18,26 @@ public class MaxConsecutiveOnesIII {
 
         int maxLength = 0;
         int tail = 0;
-        int oneCount = 0;
-
+        int zeroCount = 0;
 
         for(int head = 0; head < nums.length; head++) {
-            if (nums[head] == 1) {
-                oneCount++;
+            if (nums[head] == 0) {
+                zeroCount++;
             }
 
-            if (head - tail + 1 - oneCount > k) {
-                if (nums[tail] == 1) {
-                    oneCount--;
+            if (zeroCount > k) {
+                int count = 0;
+                while(zeroCount > k) {
+                    if (nums[tail] == 0) {
+                        zeroCount--;
+                    }
+                    tail++;
+                    count++;
                 }
-                tail++;
+                maxLength = Math.max(maxLength, count - 1);
+            } else {
+                maxLength = Math.max(maxLength, head - tail + 1);
             }
-
-            maxLength = Math.max(maxLength, head - tail + 1);
         }
 
         return maxLength;
