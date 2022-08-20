@@ -16,23 +16,31 @@ public class LongestSubstringWithoutRepeatingCharacters {
         if (str == null)
             return 0;
 
+        int tail = 0;
         int maxLength = 0;
-        Map<Character, Integer> indexMap = new HashMap<>();
+        char[] chars = str.toCharArray();
+        Map<Character, Integer> countMap = new HashMap<>();
 
-        for (int head = 0; head < str.length(); head++) {
-            Character ch = str.charAt(head);
-            Integer lastExistingIndex = indexMap.get(ch);
-            if (lastExistingIndex == null) {
-                indexMap.put(ch, head);
-                maxLength = Math.max(maxLength, indexMap.keySet().size());
-            } else {
-                head = lastExistingIndex;
-                indexMap.clear();
+        for (char c : chars) {
+            int count = countMap.getOrDefault(c, 0);
+            count++;
+            countMap.put(c, count);
+
+            while (countMap.get(c) > 1) {
+                char tailChar = chars[tail];
+                int tailCount = countMap.get(tailChar);
+                tailCount--;
+                if (tailCount == 0) {
+                    countMap.remove(tailChar);
+                } else {
+                    countMap.put(tailChar, tailCount);
+                }
+                tail++;
             }
 
+            maxLength = Math.max(maxLength, countMap.keySet().size());
         }
 
         return maxLength;
-
     }
 }
