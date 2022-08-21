@@ -1,9 +1,6 @@
 package com.canseverayberk.leetcode.easy.twopointers;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /*
 https://leetcode.com/problems/two-sum
@@ -16,40 +13,34 @@ public class TwoSum {
     }
 
     public static int[] twoSum(int[] nums, int target) {
-        List<E> values = new ArrayList<>();
-        for (int i = 0; i < nums.length; i++) {
-            values.add(new E(nums[i], i));
+        Map<Integer, List<Integer>> indexMap = new HashMap<>();
+        for(int index = 0; index < nums.length; index++) {
+            List<Integer> indexes = indexMap.getOrDefault(nums[index], new ArrayList<>());
+            indexes.add(index);
+            indexMap.put(nums[index], indexes);
         }
 
-        List<E> sortedValues = values.stream().sorted(Comparator.comparing(E::getVal)).collect(Collectors.toList());
+        Arrays.sort(nums);
 
-        int tail = 0, head = sortedValues.size() - 1;
+        int pointer1 = 0;
+        int pointer2 = nums.length - 1;
 
-        int sum = sortedValues.get(head).val + sortedValues.get(tail).val;
+        int sum = nums[pointer1] + nums[pointer2];
+
         while (sum != target) {
             if (sum > target) {
-                head--;
+                pointer2--;
             } else {
-                tail++;
+                pointer1++;
             }
-            sum = sortedValues.get(head).val + sortedValues.get(tail).val;
+            sum = nums[pointer1] + nums[pointer2];
         }
 
-        return new int[] {sortedValues.get(tail).index, sortedValues.get(head).index};
+        int firstIndex = indexMap.get(nums[pointer1]).get(0);
+        indexMap.get(nums[pointer1]).remove(0);
+        int secondIndex = indexMap.get(nums[pointer2]).get(0);
 
+        return new int[] {firstIndex, secondIndex};
     }
 
-    static class E {
-        int val;
-        int index;
-
-        public E(int val, int index) {
-            this.val = val;
-            this.index = index;
-        }
-
-        public int getVal() {
-            return val;
-        }
-    }
 }
