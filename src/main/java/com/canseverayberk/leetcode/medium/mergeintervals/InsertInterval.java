@@ -28,7 +28,6 @@ public class InsertInterval {
         for(int[] interval : intervals) {
             if (
                     (newInterval[0] <= interval[1] && newInterval[0] >= interval[0]) ||
-                            (newInterval[0] >= interval[0] && newInterval[0] <= interval[1]) ||
                             (newInterval[0] <= interval[0] && newInterval[1] >= interval[1]) ||
                             (newInterval[1] >= interval[0] && newInterval[1] <= interval[1])
             ) {
