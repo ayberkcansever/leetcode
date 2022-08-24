@@ -1,7 +1,8 @@
 package com.canseverayberk.leetcode.easy;
 
-import java.util.Arrays;
-
+/*
+https://leetcode.com/problems/missing-number
+ */
 public class MissingNumberInArray {
 
     public static void main(String[] args) {
@@ -10,12 +11,19 @@ public class MissingNumberInArray {
     }
 
     public static int missingNumber(int[] nums) {
-        Arrays.sort(nums);
-
-        for(int i = 0; i < nums.length; i++) {
-            if (nums[i] != i)
-                return i;
+        for(int index = 0; index < nums.length; index++) {
+            while(index != nums[index] && nums[index] < nums.length) {
+                int temp = nums[nums[index]];
+                nums[nums[index]] = nums[index];
+                nums[index] = temp;
+            }
         }
-        return nums[nums.length - 1] + 1;
+
+        for(int index = 0; index < nums.length; index++) {
+            if (nums[index] != index) {
+                return index;
+            }
+        }
+        return nums.length;
     }
 }
