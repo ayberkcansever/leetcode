@@ -1,4 +1,4 @@
-package com.canseverayberk.leetcode.easy;
+package com.canseverayberk.leetcode.easy.cyclicsort;
 
 /*
 https://leetcode.com/problems/missing-number
