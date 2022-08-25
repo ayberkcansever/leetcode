@@ -15,7 +15,7 @@ public class RotateList {
         listNode3.next = listNode4;
         ListNode listNode5 = new ListNode(5);
         listNode4.next = listNode5;
-        ListNode reverseList = rotateRight(listNode1, 7);
+        ListNode rotatedList = rotateRight(listNode1, 7);
     }
 
     public static ListNode rotateRight(ListNode head, int k) {
@@ -35,7 +35,7 @@ public class RotateList {
         ListNode prev = null;
 
         for(int i = 0; i < k; i++) {
-            while(head != null) {
+            while(true) {
                 if (head.next == null) {
                     prev.next = null;
                     head.next = current;
