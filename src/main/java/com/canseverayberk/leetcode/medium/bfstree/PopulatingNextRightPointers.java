@@ -1,5 +1,13 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.bfstree;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+/*
+https://leetcode.com/problems/populating-next-right-pointers-in-each-node
+ */
 public class PopulatingNextRightPointers {
 
     public static void main(String[] args) {
@@ -26,14 +34,31 @@ public class PopulatingNextRightPointers {
         if(root == null || root.left == null || root.right == null)
             return root;
 
-        root.left.next = root.right;
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
 
-        if(root.next != null) {
-            root.right.next = root.next.left;
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            List<Node> levelNodes = new ArrayList<>();
+
+            for(int i = 0; i < size; i++) {
+                Node node = queue.poll();
+                levelNodes.add(node);
+
+                if (node.left != null)
+                    queue.offer(node.left);
+                if (node.right != null)
+                    queue.offer(node.right);
+            }
+
+            Node prevNode = null;
+            for(Node node : levelNodes) {
+                if (prevNode != null) {
+                    prevNode.next = node;
+                }
+                prevNode = node;
+            }
         }
-
-        connect(root.left);
-        connect(root.right);
         return root;
     }
 

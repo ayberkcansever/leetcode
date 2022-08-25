@@ -1,14 +1,10 @@
-package com.canseverayberk.leetcode.medium.bfs;
+package com.canseverayberk.leetcode.medium.bfstree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-
+import java.util.*;
 /*
-https://leetcode.com/problems/binary-tree-level-order-traversal
+https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal
  */
-public class BinaryTreeLevelOrderTraversal {
+public class BinaryTreeZigZagLevelOrderTraversal {
 
     public static void main(String[] args) {
         TreeNode node3 = new TreeNode(3);
@@ -22,36 +18,40 @@ public class BinaryTreeLevelOrderTraversal {
         node20.left = node15;
         node20.right = node7;
 
-        List<List<Integer>> levelOrder = levelOrder(node3);
+        List<List<Integer>> levelOrder = zigzagLevelOrder(node3);
     }
 
-    public static List<List<Integer>> levelOrder(TreeNode root) {
+    public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         if(root == null)
-            return new ArrayList<>();
+            return List.of();
 
-        List<List<Integer>> result = new ArrayList<>();
+        List<List<Integer>> orderNodeList = new ArrayList<>();
 
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
+        queue.offer(root);
 
         while(!queue.isEmpty()) {
+            List<Integer> levelNodes = new ArrayList<>();
             int size = queue.size();
 
-            List<Integer> levelNodes = new ArrayList<>();
             for(int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
                 levelNodes.add(node.val);
 
                 if (node.left != null)
-                    queue.add(node.left);
+                    queue.offer(node.left);
                 if (node.right != null)
-                    queue.add(node.right);
+                    queue.offer(node.right);
             }
 
-            result.add(levelNodes);
+            if (orderNodeList.size() % 2 == 1) {
+                Collections.reverse(levelNodes);
+            }
+            orderNodeList.add(levelNodes);
+
         }
 
-        return result;
+        return orderNodeList;
     }
 
     static class TreeNode {

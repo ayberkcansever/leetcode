@@ -1,11 +1,12 @@
-package com.canseverayberk.leetcode.medium.bfs;
+package com.canseverayberk.leetcode.easy.bfstree;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /*
-https://leetcode.com/problems/binary-tree-level-order-traversal-ii
+https://leetcode.com/problems/minimum-depth-of-binary-tree
  */
-public class BinaryTreeLevelOrderTraversalII {
+public class MinimumDepthOfBinaryTree {
 
     public static void main(String[] args) {
         TreeNode node3 = new TreeNode(3);
@@ -19,40 +20,36 @@ public class BinaryTreeLevelOrderTraversalII {
         node20.left = node15;
         node20.right = node7;
 
-        List<List<Integer>> levelOrder = levelOrderBottom(node3);
+        int minDepth = minDepth(node3);
     }
 
-    public static List<List<Integer>> levelOrderBottom(TreeNode root) {
-        if(root == null)
-            return new ArrayList<>();
+    public static int minDepth(TreeNode root) {
+        if (root == null)
+            return 0;
+        if (root.left == null && root.right == null)
+            return 1;
 
-        List<List<Integer>> list = new ArrayList<>();
-
-        Stack<List<Integer>> levelNodesStack = new Stack<>();
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
+        queue.offer(root);
 
+        int minDepth = 1;
         while(!queue.isEmpty()) {
-            List<Integer> levelNodes = new ArrayList<>();
             int size = queue.size();
 
-            for(int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                levelNodes.add(node.val);
-
+                if (node.left == null && node.right == null) {
+                    return minDepth;
+                }
                 if (node.left != null)
-                    queue.add(node.left);
+                    queue.offer(node.left);
                 if (node.right != null)
-                    queue.add(node.right);
+                    queue.offer(node.right);
             }
-            levelNodesStack.push(levelNodes);
+            minDepth++;
         }
 
-        while(!levelNodesStack.isEmpty()) {
-            list.add(levelNodesStack.pop());
-        }
-
-        return list;
+        return minDepth;
     }
 
     static class TreeNode {
