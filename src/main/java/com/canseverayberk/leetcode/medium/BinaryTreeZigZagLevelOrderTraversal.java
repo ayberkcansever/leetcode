@@ -1,8 +1,9 @@
 package com.canseverayberk.leetcode.medium;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
+/*
+https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal
+ */
 public class BinaryTreeZigZagLevelOrderTraversal {
 
     public static void main(String[] args) {
@@ -21,35 +22,36 @@ public class BinaryTreeZigZagLevelOrderTraversal {
     }
 
     public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if(root == null)
+            return List.of();
+
         List<List<Integer>> orderNodeList = new ArrayList<>();
-        traverse(root, orderNodeList, -1);
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while(!queue.isEmpty()) {
+            List<Integer> levelNodes = new ArrayList<>();
+            int size = queue.size();
+
+            for(int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                levelNodes.add(node.val);
+
+                if (node.left != null)
+                    queue.offer(node.left);
+                if (node.right != null)
+                    queue.offer(node.right);
+            }
+
+            if (orderNodeList.size() % 2 == 1) {
+                Collections.reverse(levelNodes);
+            }
+            orderNodeList.add(levelNodes);
+
+        }
+
         return orderNodeList;
-    }
-
-    public static void traverse(TreeNode root, List<List<Integer>> orderNodeList, int preOrder) {
-
-        if (root == null) {
-            return;
-        }
-
-        if (orderNodeList.size() == preOrder + 1) {
-            List<Integer> currentList = new ArrayList<>();
-            orderNodeList.add(currentList);
-        }
-
-        int currentOrder = preOrder + 1;
-        List<Integer> currentList = orderNodeList.get(currentOrder);
-        if (currentList == null)
-            currentList = new ArrayList<>();
-
-        if (currentOrder % 2 == 1) {
-            currentList.add(0, root.val);
-        } else {
-            currentList.add(currentList.size(), root.val);
-        }
-
-        traverse(root.left, orderNodeList, currentOrder);
-        traverse(root.right, orderNodeList, currentOrder);
     }
 
     static class TreeNode {
