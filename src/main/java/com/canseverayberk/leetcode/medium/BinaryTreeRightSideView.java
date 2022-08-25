@@ -1,7 +1,13 @@
 package com.canseverayberk.leetcode.medium;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
+/*
+https://leetcode.com/problems/binary-tree-right-side-view
+ */
 public class BinaryTreeRightSideView {
 
     public static void main(String[] args) {
@@ -20,53 +26,31 @@ public class BinaryTreeRightSideView {
     }
 
     public static List<Integer> rightSideView(TreeNode root) {
-        List<Map<Integer, Integer>> list = new ArrayList<>();
-        traverse(root, 0, list, -1);
+        if (root == null)
+            return List.of();
 
-        System.out.println(list);
+        List<Integer> list = new ArrayList<>();
 
-        List<Integer> rightList = new ArrayList<>();
-        for (Map<Integer, Integer> powerMap : list) {
-            int maxValueInMap=(Collections.max(powerMap.values()));
-            for (Map.Entry<Integer, Integer> entry : powerMap.entrySet()) {
-                if (entry.getValue()==maxValueInMap) {
-                    rightList.add(entry.getKey());
-                    break;
-                }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+
+            TreeNode rightestNode = null;
+            for (int i = 0; i < size; i++) {
+                rightestNode = queue.poll();
+
+                if (rightestNode.left != null)
+                    queue.offer(rightestNode.left);
+                if (rightestNode.right != null)
+                    queue.offer(rightestNode.right);
             }
+
+            list.add(rightestNode.val);
         }
 
-        return rightList;
-    }
-
-    public static void traverse(TreeNode root, int power, List<Map<Integer, Integer>> orderPowerList, int preOrder) {
-
-        if (root == null) {
-            return;
-        }
-
-        if (orderPowerList.size() == preOrder + 1) {
-            orderPowerList.add(new TreeMap<Integer, Integer>());
-        }
-
-
-        int currentOrder = preOrder + 1;
-        Map<Integer, Integer> currentOrderPowerMap = orderPowerList.get(currentOrder);
-        if (currentOrderPowerMap == null) {
-            currentOrderPowerMap = new TreeMap<>();
-            currentOrderPowerMap.put(root.val, power + 1);
-        } else {
-            Integer currentPower = currentOrderPowerMap.get(root.val);
-            if (currentPower == null) {
-                currentPower = power + 1;
-            } else {
-                currentPower += 1;
-            }
-            currentOrderPowerMap.put(root.val, currentPower);
-        }
-
-        traverse(root.left, (currentOrderPowerMap.get(root.val) - 1) * 2, orderPowerList, currentOrder);
-        traverse(root.right, (currentOrderPowerMap.get(root.val)) * 2, orderPowerList, currentOrder);
+        return list;
     }
 
     static class TreeNode {
