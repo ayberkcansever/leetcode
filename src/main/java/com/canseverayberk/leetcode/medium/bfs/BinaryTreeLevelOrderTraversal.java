@@ -1,8 +1,13 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.bfs;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
+/*
+https://leetcode.com/problems/binary-tree-level-order-traversal
+ */
 public class BinaryTreeLevelOrderTraversal {
 
     public static void main(String[] args) {
@@ -21,33 +26,32 @@ public class BinaryTreeLevelOrderTraversal {
     }
 
     public static List<List<Integer>> levelOrder(TreeNode root) {
-        if (root == null)
-            return List.of();
+        if(root == null)
+            return new ArrayList<>();
 
-        List<List<Integer>> levelMap = new ArrayList<>();
-        traverse(root, 0, levelMap);
-        return levelMap;
-    }
+        List<List<Integer>> result = new ArrayList<>();
 
-    public static void traverse(TreeNode root, int level, List<List<Integer>> levelMap) {
-        if (root == null)
-            return;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
 
-        level = level + 1;
-        List<Integer> levelNodeList;
-        if (levelMap.size() < level) {
-            levelNodeList = new ArrayList<>();
-        } else {
-            levelNodeList = levelMap.get(level - 1);
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+
+            List<Integer> levelNodes = new ArrayList<>();
+            for(int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                levelNodes.add(node.val);
+
+                if (node.left != null)
+                    queue.add(node.left);
+                if (node.right != null)
+                    queue.add(node.right);
+            }
+
+            result.add(levelNodes);
         }
 
-        levelNodeList.add(root.val);
-        if (levelMap.size() > level - 1)
-            levelMap.remove(level - 1);
-        levelMap.add(level - 1, levelNodeList);
-
-        traverse(root.left, level, levelMap);
-        traverse(root.right, level, levelMap);
+        return result;
     }
 
     static class TreeNode {
