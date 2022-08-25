@@ -1,11 +1,11 @@
 package com.canseverayberk.leetcode.medium;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class BinaryTreeLevelOrderTraversal2 {
+/*
+https://leetcode.com/problems/binary-tree-level-order-traversal-ii
+ */
+public class BinaryTreeLevelOrderTraversalII {
 
     public static void main(String[] args) {
         TreeNode node3 = new TreeNode(3);
@@ -23,33 +23,36 @@ public class BinaryTreeLevelOrderTraversal2 {
     }
 
     public static List<List<Integer>> levelOrderBottom(TreeNode root) {
+        if(root == null)
+            return new ArrayList<>();
+
         List<List<Integer>> list = new ArrayList<>();
-        Map<Integer, List<Integer>> orderMap = new HashMap<>();
-        traverse(root, orderMap, -1);
 
-        int totalOrderCount = orderMap.keySet().size();
-        for (int order = totalOrderCount - 1; order >= 0; order--) {
-            list.add(orderMap.get(order));
+        Stack<List<Integer>> levelNodesStack = new Stack<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
 
+        while(!queue.isEmpty()) {
+            List<Integer> levelNodes = new ArrayList<>();
+            int size = queue.size();
+
+            for(int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                levelNodes.add(node.val);
+
+                if (node.left != null)
+                    queue.add(node.left);
+                if (node.right != null)
+                    queue.add(node.right);
+            }
+            levelNodesStack.push(levelNodes);
+        }
+
+        while(!levelNodesStack.isEmpty()) {
+            list.add(levelNodesStack.pop());
         }
 
         return list;
-    }
-
-    public static void traverse(TreeNode root, Map<Integer, List<Integer>> orderMap, int prevOrder) {
-        if (root == null)
-            return;
-
-        int currentOrder = prevOrder + 1;
-        List<Integer> nodes = orderMap.get(currentOrder);
-        if (nodes == null) {
-            nodes = new ArrayList<>();
-        }
-        nodes.add(root.val);
-        orderMap.put(currentOrder, nodes);
-
-        traverse(root.left, orderMap, currentOrder);
-        traverse(root.right, orderMap, currentOrder);
     }
 
     static class TreeNode {
