@@ -1,9 +1,12 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.dfstree;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathSum2 {
+/*
+https://leetcode.com/problems/path-sum-ii
+ */
+public class PathSumII {
 
     public static void main(String[] args) {
         TreeNode node5 = new TreeNode(5);
@@ -30,11 +33,15 @@ public class PathSum2 {
             return;
         }
 
-        prevList.add(root.val);
-        targetSum -= root.val;
+        int prevSum = root.val;
+        for(int val : prevList) {
+            prevSum += val;
+        }
 
-        if (root.left== null && root.right == null && targetSum == 0)
-            list.add(prevList);
+        prevList.add(root.val);
+        if (root.left == null && root.right == null && prevSum == targetSum) {
+            list.add(new ArrayList<>(prevList));
+        }
 
         traverse(root.left, targetSum, new ArrayList<>(prevList), list);
         traverse(root.right, targetSum, new ArrayList<>(prevList), list);
