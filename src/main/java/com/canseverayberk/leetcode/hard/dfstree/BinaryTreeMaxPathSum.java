@@ -1,5 +1,8 @@
-package com.canseverayberk.leetcode.hard;
+package com.canseverayberk.leetcode.hard.dfstree;
 
+/*
+https://leetcode.com/problems/binary-tree-maximum-path-sum
+ */
 public class BinaryTreeMaxPathSum {
 
     public static void main(String[] args) {
