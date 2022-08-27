@@ -1,8 +1,6 @@
 package com.canseverayberk.leetcode.medium.subset;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /*
 https://leetcode.com/problems/subsets-ii
@@ -18,20 +16,24 @@ public class SubSetII {
         Arrays.sort(nums);
 
         List<List<Integer>> result = new ArrayList<>();
-        result.add(new ArrayList<>());
+        result.add(List.of());
 
-        for(int n : nums) {
-            int size = result.size();
-            for(int i = 0; i < size; i++) {
-                List<Integer> newList = new ArrayList<>(result.get(i));
-                newList.add(n);
-                if (!result.contains(newList)) {
+        Queue<List<Integer>> queue = new LinkedList<>(result);
+
+        for (int num : nums) {
+            int n = queue.size();
+            for (int i = 0; i < n; i++) {
+                List<Integer> currentList = queue.poll();
+                List<Integer> newList = new ArrayList<>(currentList);
+
+                newList.add(num);
+                if (!result.contains(newList))
                     result.add(newList);
-                }
+
+                queue.offer(currentList);
+                queue.offer(newList);
             }
-
         }
-
         return result;
     }
 
