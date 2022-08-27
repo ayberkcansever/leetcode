@@ -15,30 +15,42 @@ public class BinaryTreeMaxPathSum {
         int maxPathSum = maxPathSum(node1);
     }
 
-    static int maxPathSum(TreeNode root) {
+    public static int maxPathSum(TreeNode root) {
         int[] result = new int[] {Integer.MIN_VALUE};
         traverse(root, result);
         return result[0];
     }
 
-    static int traverse(TreeNode root, int[] max) {
-        if (root == null)
+    private static void traverse(TreeNode root, int[] result) {
+        if (root == null) {
+            return;
+        }
+        int[] max = new int[] {Integer.MIN_VALUE};
+        sumFromNode(root, 0, max);
+        result[0] = Math.max(result[0], max[0]);
+
+        traverse(root.left, result);
+        traverse(root.right, result);
+    }
+
+    private static int sumFromNode(TreeNode root, int prevSum, int[] maxSum) {
+        if (root == null) {
             return 0;
-
-        int current = root.val;
-        int left = traverse(root.left, max);
-        int right = traverse(root.right, max);
-
-        if (left > 0) {
-            current += left;
         }
-        if (right > 0) {
-            current += right;
+        if (root.left == null && root.right == null) {
+            maxSum[0] = Math.max(maxSum[0], root.val);
+            return root.val;
         }
 
-        max[0] = Math.max(max[0], current);
-        int nowMax = Math.max(root.val + left, root.val + right);
-        return Math.max(nowMax, root.val);
+        prevSum += root.val;
+        maxSum[0] = Math.max(maxSum[0], prevSum);
+
+        int l = Math.max(0, sumFromNode(root.left, prevSum, maxSum));
+        int r = Math.max(0, sumFromNode(root.right, prevSum, maxSum));
+
+        maxSum[0] = Math.max(maxSum[0], l + r + root.val);
+
+        return Math.max(l, r) + root.val;
     }
 
     static class TreeNode {
