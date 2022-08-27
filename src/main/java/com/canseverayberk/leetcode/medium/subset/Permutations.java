@@ -1,4 +1,4 @@
-package com.canseverayberk.leetcode.medium.backtracking;
+package com.canseverayberk.leetcode.medium.subset;
 
 import java.util.*;
 import java.util.stream.Collectors;
