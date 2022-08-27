@@ -1,8 +1,6 @@
 package com.canseverayberk.leetcode.medium.backtracking;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -16,35 +14,32 @@ public class Permutations {
     }
 
     public static List<List<Integer>> permute(int[] nums) {
-        if(nums.length == 1) {
+        if (nums.length == 1) {
             return List.of(List.of(nums[0]));
         }
-        List<List<Integer>> finalResult = new ArrayList<>();
 
         List<List<Integer>> result = new ArrayList<>();
-        result.add(new ArrayList<>());
 
-        for(int num : nums) {
-            int size = result.size();
-            for(int i = 0; i < size; i++) {
-                if (result.get(i).size() == 0) {
-                    result.get(i).add(num);
-                    break;
-                }
-                int s = result.get(i).size();
-                for(int j = 0; j <= s; j++) {
-                    List<Integer> newList = new ArrayList<>(result.get(i));
+        Queue<List<Integer>> queue = new LinkedList<>();
+        queue.offer(new ArrayList<>());
+
+        for (int num : nums) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                List<Integer> l = queue.poll();
+                int s = l.size();
+                for (int j = 0; j <= s; j++) {
+                    List<Integer> newList = new ArrayList<>(l);
                     newList.add(j, num);
-                    result.add(newList);
-
-                    if(newList.size() == nums.length) {
-                        finalResult.add(new ArrayList<>(newList));
+                    if (newList.size() == nums.length) {
+                        result.add(newList);
                     }
+                    queue.offer(newList);
                 }
             }
         }
 
-        return finalResult;
+        return result;
     }
 
 }
