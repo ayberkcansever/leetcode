@@ -16,28 +16,35 @@ public class Permutations {
     }
 
     public static List<List<Integer>> permute(int[] nums) {
+        if(nums.length == 1) {
+            return List.of(List.of(nums[0]));
+        }
+        List<List<Integer>> finalResult = new ArrayList<>();
+
         List<List<Integer>> result = new ArrayList<>();
-        heapPermutation(result, nums, nums.length);
-        return result;
-    }
+        result.add(new ArrayList<>());
 
-    private static void heapPermutation(List<List<Integer>> result, int[] nums, int size) {
-        if (size == 1) {
-            result.add(Arrays.stream(nums).boxed().collect(Collectors.toList()));
-        }
+        for(int num : nums) {
+            int size = result.size();
+            for(int i = 0; i < size; i++) {
+                if (result.get(i).size() == 0) {
+                    result.get(i).add(num);
+                    break;
+                }
+                int s = result.get(i).size();
+                for(int j = 0; j <= s; j++) {
+                    List<Integer> newList = new ArrayList<>(result.get(i));
+                    newList.add(j, num);
+                    result.add(newList);
 
-        for (int i = 0; i < size; i++) {
-            heapPermutation(result, nums, size - 1);
-            int temp;
-            if (size % 2 == 1) {
-                temp = nums[0];
-                nums[0] = nums[size - 1];
-            } else {
-                temp = nums[i];
-                nums[i] = nums[size - 1];
+                    if(newList.size() == nums.length) {
+                        finalResult.add(new ArrayList<>(newList));
+                    }
+                }
             }
-            nums[size - 1] = temp;
         }
+
+        return finalResult;
     }
 
 }
