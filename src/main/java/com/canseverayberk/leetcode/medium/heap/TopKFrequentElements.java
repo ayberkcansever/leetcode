@@ -1,4 +1,4 @@
-package com.canseverayberk.leetcode.medium;
+package com.canseverayberk.leetcode.medium.heap;
 
 import java.util.*;
 import java.util.stream.Collectors;
