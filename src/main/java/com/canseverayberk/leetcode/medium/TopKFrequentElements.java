@@ -1,13 +1,6 @@
 package com.canseverayberk.leetcode.medium;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -22,28 +15,25 @@ public class TopKFrequentElements {
     }
 
     public static int[] topKFrequent(int[] nums, int k) {
-        Map<Integer, Integer> countMap = new HashMap<>();
-
-        for (int num : nums) {
-            Integer count = countMap.get(num);
-            if (Objects.isNull(count)) {
-                countMap.put(num, 1);
-            } else {
-                countMap.put(num, count + 1);
-            }
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int n : nums) {
+            int count = map.getOrDefault(n, 0);
+            count++;
+            map.put(n, count);
         }
-        List<Integer> sorted = countMap.values().stream().sorted(Integer::compareTo).collect(Collectors.toList());
-        Collections.reverse(sorted);
-        Set<Integer> topTwoValues = new HashSet<>(sorted.subList(0, k));
 
-        List<Integer> resultList = new ArrayList<>();
+        PriorityQueue<Integer[]> queue = new PriorityQueue<>((a, b) -> b[1] - a[1]);
+        for (int key : map.keySet()) {
+            queue.offer(new Integer[]{key, map.get(key)});
+        }
 
-        countMap.keySet().forEach(num -> {
-            if (topTwoValues.contains(countMap.get(num))) {
-                resultList.add(num);
-            }
-        });
+        if (queue.size() == 1)
+            return new int[]{nums[0]};
 
-        return resultList.stream().mapToInt(Integer::intValue).toArray();
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+            result[i] = queue.poll()[0];
+        }
+        return result;
     }
 }
