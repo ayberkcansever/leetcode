@@ -9,7 +9,7 @@ import java.util.Set;
 /*
 https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals
  */
-public class LeastNumberOgUniqueIntegersAfterKRemovals {
+public class LeastNumberOfUniqueIntegersAfterKRemovals {
 
     public static void main(String[] args) {
         int[] arr = new int[]{5, 5, 4};
