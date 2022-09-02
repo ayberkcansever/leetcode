@@ -21,59 +21,64 @@ public class ConstructBinaryTreeFromPreOrderAndInOrder {
         if (inorder.length == 0)
             return null;
 
+        TreeNode root = new TreeNode(preorder[0]);
 
-        int rootVal = preorder[0];
-        TreeNode root = new TreeNode(rootVal);
+        int[] leftTree = getLeftTree(inorder, root.val);
+        int[] rightTree = getRightTree(inorder, root.val);
 
-        if (preorder.length == 1 && inorder.length == 1)
-            return root;
-
-        int[] left = getLeftSide(rootVal, inorder);
-        int[] right = getRightSide(rootVal, inorder);
-
-        root.right = buildTree(removeFrom(preorder, left, rootVal), right);
-        root.left = buildTree(removeFrom(preorder, right, rootVal), left);
+        root.left = buildTree(removeTree(preorder, rightTree, root.val), leftTree);
+        root.right = buildTree(removeTree(preorder, leftTree, root.val), rightTree);
 
         return root;
     }
 
-    public static int[] getLeftSide(int rootVal, int[] inorder) {
-        List<Integer> list = new ArrayList<>();
-        for(int i : inorder) {
-            if (i == rootVal)
-                break;
-            list.add(i);
-        }
-        return list.stream().mapToInt(Integer::intValue).toArray();
-    }
-
-    public static int[] getRightSide(int rootVal, int[] inorder) {
-        List<Integer> list = new ArrayList<>();
-        boolean foundRoot = false;
-        for(int i : inorder) {
-            if (i == rootVal)
-                foundRoot = true;
-            if (foundRoot)
-                list.add(i);
-        }
-        return list.stream().mapToInt(Integer::intValue).toArray();
-    }
-
-    public static int[] removeFrom(int[] arr, int[] remove, int root) {
+    private static int[] removeTree(int[] preorder, int[] tree, int root) {
         Set<Integer> set = new HashSet<>();
         set.add(root);
-        for(int i : remove) {
+        for(int i : tree) {
             set.add(i);
         }
 
-        List<Integer> list = new ArrayList<>();
-        for(int i : arr) {
-            if (!set.contains(i)) {
-                list.add(i);
+        int length = preorder.length - 1 - tree.length;
+        int[] remaining = new int[length];
+        int j = 0;
+        for (int i = 0; i < preorder.length; i++) {
+            if (!set.contains(preorder[i])) {
+                remaining[j] = preorder[i];
+                j++;
             }
         }
+        return remaining;
+    }
 
-        return list.stream().mapToInt(Integer::intValue).toArray();
+    private static int[] getLeftTree(int[] inorder, int rootVal) {
+        int rootIndex = findRootIndex(inorder, rootVal);
+
+        int[] leftTree = new int[rootIndex];
+        for(int i = 0; i < rootIndex; i++) {
+            leftTree[i] = inorder[i];
+        }
+
+        return leftTree;
+    }
+
+    private static int[] getRightTree(int[] inorder, int rootVal) {
+        int rootIndex = findRootIndex(inorder, rootVal);
+
+        int[] rightTree = new int[inorder.length - rootIndex - 1];
+        for(int i = rootIndex + 1; i < inorder.length; i++) {
+            rightTree[i - rootIndex - 1] = inorder[i];
+        }
+
+        return rightTree;
+    }
+
+    private static int findRootIndex(int[] inorder, int rootVal) {
+        int rootIndex = 0;
+        while(inorder[rootIndex] != rootVal) {
+            rootIndex++;
+        }
+        return rootIndex;
     }
 
     static class TreeNode {
