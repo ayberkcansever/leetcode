@@ -1,4 +1,4 @@
-package com.canseverayberk.leetcode.hard.heap;
+package com.canseverayberk.leetcode.hard.kwaymerge;
 
 import java.util.List;
 import java.util.PriorityQueue;
