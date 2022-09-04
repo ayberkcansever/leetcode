@@ -44,8 +44,6 @@ public class TopologicalSort {
             }
         }
         topologicalSort.add(node);
-
-        Pattern compile = Pattern.compile(".");
     }
 
     static class Node {
