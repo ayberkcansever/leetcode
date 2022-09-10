@@ -1,7 +1,9 @@
 package com.canseverayberk.leetcode.medium.twopointers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
 https://leetcode.com/problems/partition-labels
@@ -14,34 +16,28 @@ public class PartitionLabels {
     }
 
     public static List<Integer> partitionLabels(String s) {
-        if (s == null || s.length() == 0)
-            return List.of();
-        List<Integer> result = new ArrayList<>();
-        s = giveRemainingString(s, result);
-        while(s.length() > 0) {
-            s = giveRemainingString(s, result);
+        List<Integer> indices = new ArrayList<>();
+        char[] chars = s.toCharArray();
+        Map<Character, Integer> latestIndexMap = new HashMap<>();
+
+        for(int i = 0; i < chars.length; i++) {
+            latestIndexMap.put(chars[i], i);
         }
-        return result;
-    }
 
-    private static String giveRemainingString(String s, List<Integer> list) {
-        String firstLetter = String.valueOf(s.charAt(0));
-        int lastIndexOfFirstLetter = s.lastIndexOf(firstLetter);
-        String splittedString = s.substring(0, lastIndexOfFirstLetter);
-        int newLastIndex = 0;
-
-        while (newLastIndex < lastIndexOfFirstLetter) {
-            for(int i = 0; i < splittedString.length(); i++) {
-                char charAt = splittedString.charAt(i);
-                int lastIndex = s.lastIndexOf(charAt);
-                newLastIndex = Math.max(lastIndex, newLastIndex);
-                splittedString = s.substring(0, newLastIndex);
+        int index = 0;
+        while(index < chars.length) {
+            int pointer1 = latestIndexMap.get(chars[index]);
+            int size = 0;
+            while(index < pointer1) {
+                pointer1 = Math.max(pointer1, latestIndexMap.get(chars[index]));
+                index++;
+                size++;
             }
+            index++;
+            indices.add(size + 1);
         }
 
-        newLastIndex += 1;
-        list.add(newLastIndex);
-        return s.substring(newLastIndex);
+        return indices;
     }
 
 }
