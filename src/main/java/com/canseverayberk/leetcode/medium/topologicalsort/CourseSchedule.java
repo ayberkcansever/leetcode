@@ -32,12 +32,14 @@ public class CourseSchedule {
 
         while (nodesMap.size() > 0) {
             neighbourSet = new HashSet<>();
+            // determine all neighbors
             for (Node node : nodesMap.values()) {
                 for (Node neighbor : node.neighbors) {
                     neighbourSet.add(neighbor.val);
                 }
             }
 
+            // determine source nodes
             Set<Node> sourceNodes = new HashSet<>();
             for (Node node : nodesMap.values()) {
                 if (!neighbourSet.contains(node.val)) {
@@ -45,13 +47,16 @@ public class CourseSchedule {
                 }
             }
 
+            // if no source node break, means cycle
             if (sourceNodes.size() == 0)
                 break;
 
+            // remove source nodes from the map
             for (Node sourceNode : sourceNodes) {
                 nodesMap.remove(sourceNode.val);
             }
 
+            // remove source nodes from neighbors
             for (Node node : nodesMap.values()) {
                 Iterator<Node> iter = node.neighbors.iterator();
                 while (iter.hasNext()) {
