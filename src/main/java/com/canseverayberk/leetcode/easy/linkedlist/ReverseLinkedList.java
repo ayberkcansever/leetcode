@@ -1,5 +1,8 @@
 package com.canseverayberk.leetcode.easy.linkedlist;
 
+/*
+https://leetcode.com/problems/reverse-linked-list/
+ */
 public class ReverseLinkedList {
 
     public static void main(String[] args) {
@@ -18,12 +21,16 @@ public class ReverseLinkedList {
     private static ListNode reverseList(ListNode head) {
         if (head == null)
             return null;
-        ListNode newHead = new ListNode(head.val);
-        while (head.next != null) {
-            head = head.next;
-            newHead = new ListNode(head.val, newHead);
+
+        ListNode prev = null;
+        while(head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
         }
-        return newHead;
+
+        return prev;
     }
 
     static class ListNode {
